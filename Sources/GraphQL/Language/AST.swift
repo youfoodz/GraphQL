@@ -451,10 +451,7 @@ public final class SelectionSet {
     }
 }
 
-extension SelectionSet : Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
-    }
+extension SelectionSet : Equatable {
 
     public static func == (lhs: SelectionSet, rhs: SelectionSet) -> Bool {
         guard lhs.selections.count == rhs.selections.count else {

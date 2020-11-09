@@ -111,7 +111,7 @@ final class ValidationContext {
     let typeInfo: TypeInfo
     var errors: [GraphQLError]
     var fragments: [String: FragmentDefinition]
-    var fragmentSpreads: [SelectionSet: [FragmentSpread]]
+    var fragmentSpreads: [ObjectIdentifier: [FragmentSpread]]
     var recursivelyReferencedFragments: [OperationDefinition: [FragmentDefinition]]
     var variableUsages: [HasSelectionSet: [VariableUsage]]
     var recursiveVariableUsages: [OperationDefinition: [VariableUsage]]
@@ -153,7 +153,8 @@ final class ValidationContext {
     }
 
     func getFragmentSpreads(node: SelectionSet) -> [FragmentSpread] {
-        var spreads = fragmentSpreads[node]
+        let identifier = ObjectIdentifier(node)
+        var spreads = fragmentSpreads[identifier]
 
         if spreads == nil {
             spreads = []
@@ -175,7 +176,7 @@ final class ValidationContext {
                 }
             }
 
-            fragmentSpreads[node] = spreads
+            fragmentSpreads[identifier] = spreads
         }
 
         return spreads!
