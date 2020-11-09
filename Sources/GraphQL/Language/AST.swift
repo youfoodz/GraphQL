@@ -890,6 +890,18 @@ public final class ListValue {
         self.loc = loc
         self.values = values
     }
+
+    public func get(key: String) -> NodeResult? {
+        switch key {
+        case "values":
+            guard !values.isEmpty else {
+                return nil
+            }
+            return .array(values)
+        default:
+            return nil
+        }
+    }
 }
 
 extension ListValue : Equatable {
@@ -917,6 +929,18 @@ public final class ObjectValue {
         self.loc = loc
         self.fields = fields
     }
+
+    public func get(key: String) -> NodeResult? {
+        switch key {
+        case "fields":
+            guard !fields.isEmpty else {
+                return nil
+            }
+            return .array(fields)
+        default:
+            return nil
+        }
+    }
 }
 
 extension ObjectValue : Equatable {
@@ -935,6 +959,17 @@ public final class ObjectField {
         self.loc = loc
         self.name = name
         self.value = value
+    }
+
+    public func get(key: String) -> NodeResult? {
+        switch key {
+        case "name":
+            return .node(name)
+        case "value":
+            return .node(value)
+        default:
+            return nil
+        }
     }
 }
 
